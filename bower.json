@@ -1,0 +1,14 @@
+{
+  "name": "streaming_api",
+  "version": "0.0.0",
+  "authors": [
+    "sasaki-hiroaki <sasaki-hiroaki@kcgrp.jp>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "d3": "~3.5.6",
+    "epoch": "~0.6.0",
+    "jquery": "~2.1.4"
+  }
+}

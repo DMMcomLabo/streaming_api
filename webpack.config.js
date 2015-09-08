@@ -4,24 +4,25 @@ var BowerWebpackPlugin = require("bower-webpack-plugin");
 
 module.exports = {
   entry: {
-    sample: './src/js/sample.js'
+    // sample: './src/js/sample.js'
+    test: './src/js/test.js'
   },
   output: {
     filename: '[name].bundle.js'
   },
   resolve: {
-    root: path.join(__dirname, 'src/js/'),
+    root: path,
     extensions: ['', '.js', '.json'],
     modulesDirectories: ['node_modules', 'bower_components'],
     alias: {
-      // bowerのmainに設定されていないもので。必要なものは個別にパスを指定
-      'famous-global': 'famous/dist/famous-global.js',
-      'ui-grid': 'angular-ui-grid/ui-grid.js'
+
     }
   },
   module: {
     loaders: [
-      { test: /\.css$/, loader: "style-loader!css-loader" }
+      { test: /\.css$/, loader: "style-loader!css-loader" },
+      { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url-loader?limit=10000&minetype=application/font-woff" },
+      { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader" }
     ]
   },
   plugins: [

@@ -2,9 +2,10 @@
 
 // Add gulp plugin
 var gulp = require('gulp');
+var sass = require('gulp-sass');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
-// var cached = require('gulp-cached');
+var cached = require('gulp-cached');
 var plumber = require('gulp-plumber');
 
 // Add webpack-stream
@@ -20,10 +21,10 @@ gulp.task('webpack', function() {
     .pipe(plumber())
   	.pipe(webpack(require('./webpack.config.js')))
     .pipe(gulp.dest('public/js/'))
-    .pipe(uglify())
-    .pipe(rename({
-        extname: '.min.js'
-    }))
+    // .pipe(uglify())
+    // .pipe(rename({
+    //     extname: '.min.js'
+    // }))
     .pipe(gulp.dest('public/js/'));
 });
 
@@ -32,21 +33,12 @@ gulp.task('webpack', function() {
 // ------------------------------------------------------------------
 
 // SCSS：Autoprefix => minify
-gulp.task('sass', function() {
-  return gulp.src(paths.scssSrc)
-    .pipe(cached('sass'))
+gulp.task('sass', function () {
+  gulp.src('./src/scss/**/*.scss')
     .pipe(plumber())
-    .pipe(compass({
-      config_file: './compass-config.rb',
-      css: paths.cssDir,
-      sass: './src/public/page/sass'
-    }))
-    .pipe(please({
-      autoprefixer: {browsers: ['last 2 versions']},
-      minifier: true
-    }))
-    .pipe(gulp.dest(paths.cssDir));
-    // .pipe(reload({stream: true}));
+    .pipe(cached('sass'))
+    .pipe(sass())
+    .pipe(gulp.dest('./public/css'));
 });
 
 // ------------------------------------------------------------------
@@ -54,7 +46,7 @@ gulp.task('sass', function() {
 // ------------------------------------------------------------------
 
 gulp.task('default', ['webpack', 'watch']);
-gulp.task('watch', function() {
-  // gulp.watch(paths.scssSrc, ['sass']);
+gulp.task('watch', ['sass', 'webpack'], function() {
+  gulp.watch('./src/scss/**/*.scss', ['sass']);
   gulp.watch('./src/js/*.js', ['webpack']);
 });

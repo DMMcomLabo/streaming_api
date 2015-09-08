@@ -1,6 +1,7 @@
 'use strict';
 
 // Add gulp plugin
+var del = require('del');
 var gulp = require('gulp');
 var sass = require('gulp-sass');
 var uglify = require('gulp-uglify');
@@ -20,17 +21,33 @@ gulp.task('webpack', function() {
   return gulp.src('./src/js/lib.js')
     .pipe(plumber())
   	.pipe(webpack(require('./webpack.config.js')))
-    .pipe(gulp.dest('public/js/'))
+    // .pipe(gulp.dest('public/js/'))
     // .pipe(uglify())
     // .pipe(rename({
     //     extname: '.min.js'
     // }))
-    .pipe(gulp.dest('public/js/'));
+    .pipe(gulp.dest('./public/js/'));
 });
 
 // ------------------------------------------------------------------
 // Task:CSS
 // ------------------------------------------------------------------
+var fontArr = [
+    './public/js/**/*.eot',
+    './public/js/**/*.woff2',
+    './public/js/**/*.ttf',
+    './public/js/**/*.svg',
+    './public/js/**/*.woff'
+];
+
+// Webfont:Copy => DirectoryChange
+gulp.task('copy:font', function() {
+    return gulp.src(fontArr)
+    .pipe(gulp.dest('public/'))
+    .on('end', function(){
+        del(fontArr);
+    });
+});
 
 // SCSS：Autoprefix => minify
 gulp.task('sass', function () {

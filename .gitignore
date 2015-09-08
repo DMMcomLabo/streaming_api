@@ -26,3 +26,12 @@ build/Release
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
 node_modules
 bower_components
+
+# Stat www directory
+public/fonts
+public/js/**/*.otf
+public/js/**/*.eot
+public/js/**/*.ttf
+public/js/**/*.svg
+public/js/**/*.woff
+public/js/**/*.woff2
